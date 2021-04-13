@@ -7,7 +7,7 @@ package taxrecordsystem;
 
 /**
  *
- * @author black
+ * @author Kieren Foenander
  */
 public class TaxRecordSystem {
 
