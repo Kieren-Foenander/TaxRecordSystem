@@ -5,6 +5,8 @@ Assignment 2
  */
 package taxrecordsystem;
 
+import taxrecordsystem.view.TaxRecordSystemView;
+
 /**
  *
  * @author Kieren Foenander
@@ -16,7 +18,8 @@ public class TaxRecordSystem {
      */
     public static void main(String[] args) {
         
-        // TODO code application logic here
+        TaxRecordSystemView trsv = new TaxRecordSystemView();
+        trsv.setVisible(true);
        
     }
 
