@@ -27,7 +27,9 @@ import taxrecordsystem.model.Customer;
  */
 public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView {
     
-    // Variables declaration                  
+    // Variables declaration
+    private TaxRecordSystemPresenter presenter;
+    
     private JButton SaveButton;
     private JLabel addressLabel;
     private JTextField addressTextField;
@@ -389,7 +391,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
     @Override
     public void bind(TaxRecordSystemPresenter p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        p = presenter;
     }
 
     @Override
