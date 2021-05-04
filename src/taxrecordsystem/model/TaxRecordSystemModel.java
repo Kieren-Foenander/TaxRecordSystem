@@ -55,12 +55,49 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
             updateCustomer = connection.prepareStatement("UPDATE `taxpayers`.`taxpayers` SET `TFN` = ?,"
                     + " `FIRSTNAME` = ?, `LASTNAME` = ?, `ADDRESS` = ?, `PHONE` = ?, `INCOME` = ?, "
                     + "`DEDUCTIBLE` = ?, `TAXHELD` = ?, `TAXRETURNED` = ? WHERE (`TFN` = ?)");
-            
-        } catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            
+            System.exit(1);
         }
+
+    }
+    
+    @Override
+    public List <Customer> getAllCustomers(){
         
+        List <Customer> result = null;
+        ResultSet rs = null;
+        
+        try{
+            // executes query and returns matching resutls
+            rs = selectAllCustomers.executeQuery();
+            result = new ArrayList <Customer>();
+            
+            while (rs.next()){
+                result.add(new Customer(
+                    rs.getInt("TFN"),
+                    rs.getString("FIRSTNAME"),
+                    rs.getString("LASTNAME"),
+                    rs.getString("ADDRESS"),
+                    rs.getString("PHONE"),
+                    rs.getDouble("INCOME"),
+                    rs.getDouble("DEDUCTIBLE"),
+                    rs.getDouble("TAXHELD"),
+                    rs.getDouble("TAXRETURNED")    
+                ));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally{
+            try{
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
     
     
