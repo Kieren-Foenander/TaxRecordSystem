@@ -10,7 +10,6 @@ package taxrecordsystem.model;
  * @author Kieren Foenander
  */
 public class Customer {
-    
 
     // creating instance varibles for a customer object
     private int tfn;
@@ -22,14 +21,12 @@ public class Customer {
     private double deductibleAmount;
     private double taxHeld;
     private double returnTax;
-    
-   
-    
-    Customer(){
-        
-    } // defualt constructor
-    
-    Customer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax){
+
+    Customer() {// defualt constructor
+    }
+
+    Customer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
+        // parameterised constructor  
         this.tfn = tfn;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,23 +34,22 @@ public class Customer {
         this.phone = phone;
         this.income = income;
         this.deductibleAmount = deductibleAmount;
+        taxHeld = calculateTaxHeld(income);
         this.taxHeld = taxHeld;
+        returnTax = calculateReturnTax(income, taxHeld, deductibleAmount);
         this.returnTax = returnTax;
-        
-    } // parameterised constructor
-    
-    
+    }
+
     /* Set and Get methods */
-    
-    public void setTfn(int tfn){
+    public void setTfn(int tfn) {
         this.tfn = tfn;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
-    public void setLastName(String lastName){
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -72,8 +68,8 @@ public class Customer {
     public void setDeductibleAmount(double deductibleAmount) {
         this.deductibleAmount = deductibleAmount;
     }
-    
-    public int getTfn(){
+
+    public int getTfn() {
         return tfn;
     }
 
@@ -108,9 +104,9 @@ public class Customer {
     public double getReturnTax() {
         return returnTax;
     }
-    
-    public double calculateTaxHeld(double income, double deductibleTax){
-        
+
+    public double calculateTaxHeld(double income) {
+
         double untiered = 18200;
         double tierOneLow = 18201;
         double tierOneHigh = 37000;
@@ -127,48 +123,38 @@ public class Customer {
         double tierFourSetAmount = 54232;
         double tierFourRate = 0.47;
         double amountOverThreshHold;
-        
         // values added from appendix
-        
-        
-        
+
         // will find which income tier the customer is in and calculate the tax held by using the rate of tax
-        if (income < tierOneLow){
+        if (income < tierOneLow) {
             taxHeld = 0;
-        } else if (income >= tierOneLow && income <= tierOneHigh){
+        } else if (income >= tierOneLow && income <= tierOneHigh) {
 
             amountOverThreshHold = income - untiered;
-            taxHeld = amountOverThreshHold*tierOneRate;
-        } else if(income >= tierTwoLow && income <= tierTwoHigh){
-            
+            taxHeld = amountOverThreshHold * tierOneRate;
+        } else if (income >= tierTwoLow && income <= tierTwoHigh) {
+
             amountOverThreshHold = income - tierOneHigh;
-            taxHeld = tierTwoSetAmount +(amountOverThreshHold*tierTwoRate);
-        } else if (income >= tierThreeLow && income <= tierThreeHigh){
-            
+            taxHeld = tierTwoSetAmount + (amountOverThreshHold * tierTwoRate);
+        } else if (income >= tierThreeLow && income <= tierThreeHigh) {
+
             amountOverThreshHold = income - tierTwoHigh;
-            taxHeld = tierThreeSetAmount +(amountOverThreshHold*tierThreeRate);
-        } else if(income >= tierFour){
-            
+            taxHeld = tierThreeSetAmount + (amountOverThreshHold * tierThreeRate);
+        } else if (income >= tierFour) {
+
             amountOverThreshHold = income - tierThreeHigh;
-            taxHeld = tierFourSetAmount + (amountOverThreshHold*tierFourRate);  
+            taxHeld = tierFourSetAmount + (amountOverThreshHold * tierFourRate);
         }
-        
-        
         return taxHeld;
     }
-    
-    public double calculateReturnTax(double income, double taxHeld){
-        
-         
-        
-        
+
+    public double calculateReturnTax(double income, double taxHeld, double deductibleAmount) {
+
+        double actualIncome = income - deductibleAmount; // calcualtes actual income
+        double actualTaxHeld = calculateTaxHeld(actualIncome); // uses calculate tax Held method to find the actual tax held with the actual income
+        returnTax = taxHeld - actualTaxHeld; // finds the difference
+
         return returnTax;
     }
-    
-
-    
-    
-    
-          
 
 }
