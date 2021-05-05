@@ -3,7 +3,6 @@ Programmer: Kieren Foenander S012141776
 Course: COIT12200 Software Design and Development
 Assignment 2
  */
-
 package taxrecordsystem.model;
 
 import java.util.List;
@@ -23,34 +22,33 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
     private static final String URL = "jdbc:mysql://localhost:3306/taxpayers";
     private static final String USER = "root";
     private static final String PASSWORD = "mypassword";
-    
+
     private Connection connection = null;
     private PreparedStatement selectAllCustomers = null;
     private PreparedStatement selectCustomerByTfn = null;
     private PreparedStatement selectCustomerByLastName = null;
     private PreparedStatement insertNewCustomer = null;
     private PreparedStatement updateCustomer = null;
-    
-    
-    public TaxRecordSystemModel(){ //constructor
-        
-        try{
+
+    public TaxRecordSystemModel() { //constructor
+
+        try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            
+
             //sql statement to select all customers
             selectAllCustomers = connection.prepareStatement("SELECT * FROM taxpayers");
-            
+
             //sql statement to select specific customer by TFN
             selectCustomerByTfn = connection.prepareStatement("SELECT * FROM taxpayers WHERE TFN = ?");
-            
+
             // sql statement to select specific customer bny last name 
             selectCustomerByLastName = connection.prepareStatement("SELECT * FROM taxpayers WHERE LASTNAME = ?");
-            
+
             // sql statement to insert new entry
             insertNewCustomer = connection.prepareStatement("INSERT INTO `taxpayers`.`taxpayers` "
                     + "(`TFN`, `FIRSTNAME`, `LASTNAME`, `ADDRESS`, `PHONE`, `INCOME`, `DEDUCTIBLE`, `TAXHELD`, `TAXRETURNED`)"
                     + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            
+
             //sql command to update entry
             updateCustomer = connection.prepareStatement("UPDATE `taxpayers`.`taxpayers` SET `TFN` = ?,"
                     + " `FIRSTNAME` = ?, `LASTNAME` = ?, `ADDRESS` = ?, `PHONE` = ?, `INCOME` = ?, "
@@ -62,36 +60,36 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         }
 
     }
-    
+
     @Override
-    public List <Customer> getAllCustomers(){
-        
-        List <Customer> result = null;
+    public List<Customer> getAllCustomers() {
+
+        List<Customer> result = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             // executes query and returns matching resutls
             rs = selectAllCustomers.executeQuery();
-            result = new ArrayList <Customer>();
-            
-            while (rs.next()){
+            result = new ArrayList<Customer>();
+
+            while (rs.next()) {
                 result.add(new Customer(
-                    rs.getInt("TFN"),
-                    rs.getString("FIRSTNAME"),
-                    rs.getString("LASTNAME"),
-                    rs.getString("ADDRESS"),
-                    rs.getString("PHONE"),
-                    rs.getDouble("INCOME"),
-                    rs.getDouble("DEDUCTIBLE"),
-                    rs.getDouble("TAXHELD"),
-                    rs.getDouble("TAXRETURNED")    
+                        rs.getInt("TFN"),
+                        rs.getString("FIRSTNAME"),
+                        rs.getString("LASTNAME"),
+                        rs.getString("ADDRESS"),
+                        rs.getString("PHONE"),
+                        rs.getDouble("INCOME"),
+                        rs.getDouble("DEDUCTIBLE"),
+                        rs.getDouble("TAXHELD"),
+                        rs.getDouble("TAXRETURNED")
                 ));
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally{
-            try{
+        } finally {
+            try {
                 rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -99,58 +97,144 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         }
         return result;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @Override
-    public List<Customer> getAllCustomers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public List<Customer> getCustomerByTfn(int tfn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // instantiates variables required
+        List<Customer> result = null;
+        ResultSet rs = null;
+
+        try {
+            // executeQuery returns ResultSet containing matching entries
+            rs = selectCustomerByTfn.executeQuery();
+            result = new ArrayList<Customer>();
+
+            while (rs.next()) { // adds results as new customer object into arraylist 
+                result.add(new Customer(
+                        rs.getInt("TFN"),
+                        rs.getString("FIRSTNAME"),
+                        rs.getString("LASTNAME"),
+                        rs.getString("ADDRESS"),
+                        rs.getString("PHONE"),
+                        rs.getDouble("INCOME"),
+                        rs.getDouble("DEDUCTIBLE"),
+                        rs.getDouble("TAXHELD"),
+                        rs.getDouble("TAXRETURNED")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result; // reutrns arraylist
     }
 
     @Override
     public List<Customer> getCustomerByLastName(String lastName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Customer> result = null;
+        ResultSet rs = null;
+
+        try {
+            // executeQuery returns ResultSet containing matching entries
+            rs = selectCustomerByLastName.executeQuery();
+            result = new ArrayList<Customer>();
+
+            while (rs.next()) { // adds results as new customer object into arraylist 
+                result.add(new Customer(
+                        rs.getInt("TFN"),
+                        rs.getString("FIRSTNAME"),
+                        rs.getString("LASTNAME"),
+                        rs.getString("ADDRESS"),
+                        rs.getString("PHONE"),
+                        rs.getDouble("INCOME"),
+                        rs.getDouble("DEDUCTIBLE"),
+                        rs.getDouble("TAXHELD"),
+                        rs.getDouble("TAXRETURNED")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result; // returns arraylist
     }
 
     @Override
     public int addCustomer(int tfn, String firstName, String lastName, String Address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        // instantiates int to return
+        int result = 0;
+        
+        //sets parameters for new customer then executes insert statement
+        try{
+            
+            insertNewCustomer.setInt(1, tfn);
+            insertNewCustomer.setString(2, firstName);
+            insertNewCustomer.setString(3, lastName);
+            insertNewCustomer.setString(4, Address);
+            insertNewCustomer.setString(5, phone);
+            insertNewCustomer.setDouble(6, income);
+            insertNewCustomer.setDouble(7, deductibleAmount);
+            insertNewCustomer.setDouble(8, taxHeld);
+            insertNewCustomer.setDouble(9, returnTax);
+            
+            // inserts new entry and returns # of rows updated
+            result = insertNewCustomer.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            close();
+        }
+        return result;
     }
 
     @Override
-    public int editCustomer(int tfn, String firstName, String lastName, String Address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int editCustomer(int tfn, String firstName, String lastName, String Address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax, int originalTfn) {
+                // instantiates int to return
+        int result = 0;
+        
+        //sets parameters for customer update then executes update statement
+        try{
+            
+            updateCustomer.setInt(1, tfn);
+            updateCustomer.setString(2, firstName);
+            updateCustomer.setString(3, lastName);
+            updateCustomer.setString(4, Address);
+            updateCustomer.setString(5, phone);
+            updateCustomer.setDouble(6, income);
+            updateCustomer.setDouble(7, deductibleAmount);
+            updateCustomer.setDouble(8, taxHeld);
+            updateCustomer.setDouble(9, returnTax);
+            updateCustomer.setInt(10, tfn);
+            
+            // updates existing entry and returns # of rows updated
+            result = updateCustomer.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            close();
+        }
+        return result;
     }
 
     @Override
     public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            connection.close(); 
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }
