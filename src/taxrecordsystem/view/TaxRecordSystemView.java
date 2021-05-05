@@ -14,6 +14,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
@@ -26,7 +27,7 @@ import taxrecordsystem.model.Customer;
  * @author Kieren Foenander
  */
 public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView {
-    
+
     // Variables declaration
     private TaxRecordSystemPresenter presenter;
     
@@ -137,16 +138,20 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         maximumEntryTextField.setEditable(false);
         
         ofLabel.setText("of");
+        
+        setVisible(true);
 
         browsButton.setText("Browse");
         browsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
-                browsButtonActionPerformed(evt);
+                browseButtonActionPerformed(evt);
             }
         });
 
         tfnSearchButton.setText("Search By TFN");
         tfnSearchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 tfnSearchButtonActionPerformed(evt);
             }
@@ -154,6 +159,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         lastNameSearchButton.setText("Search By Last Name");
         lastNameSearchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 lastNameSearchButtonActionPerformed(evt);
             }
@@ -161,6 +167,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         clearTextFieldsButton.setText("Add New Customer");
         clearTextFieldsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 clearTextFieldsButtonActionPerformed(evt);
             }
@@ -169,6 +176,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         SaveButton.setText("Save New Customer");
         SaveButton.setToolTipText("");
         SaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 SaveButtonActionPerformed(evt);
             }
@@ -176,12 +184,14 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         editButton.setText("Save Updated detials");
         editButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 editButtonActionPerformed(evt);
             }
         });
 
         maximumEntryTextField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 maximumEntryTextFieldActionPerformed(evt);
             }
@@ -191,6 +201,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         previousButton.setText("previous");
         previousButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 previousButtonActionPerformed(evt);
             }
@@ -198,6 +209,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         nextButton.setText("next");
         nextButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 nextButtonActionPerformed(evt);
             }
@@ -349,21 +361,33 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         );
 
         pack();
-    }//</editor-fold>                    
+    }//</editor-fold>   
+    
+    
 
     private void maximumEntryTextFieldActionPerformed(ActionEvent evt) {                                                      
         // TODO add your handling code here:
     }                                                     
 
     private void SaveButtonActionPerformed(ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        int tfn = Integer.parseInt(tfnTextField.getText());
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String address = addressTextField.getText();
+        String phone = phoneTextField.getText();
+        double income = Double.parseDouble(incomeTextField.getText());
+        double deductible = Double.parseDouble(deductibleTextField.getText());
+        double taxHeld = 0;
+        double returnTax = 0;
+        presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+        
     }                                          
 
     private void editButtonActionPerformed(ActionEvent evt) {                                           
         // TODO add your handling code here:
     }                                          
 
-    private void browsButtonActionPerformed(ActionEvent evt) {                                            
+    private void browseButtonActionPerformed(ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
 
@@ -376,7 +400,15 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     }                                                    
 
     private void clearTextFieldsButtonActionPerformed(ActionEvent evt) {                                                      
-        // TODO add your handling code here:
+        tfnTextField.setText("");
+        firstNameTextField.setText("");
+        lastNameTextField.setText("");
+        addressTextField.setText("");
+        phoneTextField.setText("");
+        incomeTextField.setText("");
+        deductibleTextField.setText("");
+        taxHeldTextField.setText("");
+        returnTaxTextField.setText("");
     }                                                     
 
     private void previousButtonActionPerformed(ActionEvent evt) {                                               
@@ -391,12 +423,12 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
     @Override
     public void bind(TaxRecordSystemPresenter p) {
-        p = presenter;
+        presenter = p;
     }
 
     @Override
     public void setBrowsing(boolean browsing) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        presenter.browse();
     }
 
     @Override
@@ -408,6 +440,10 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     public void displayRecord(Customer c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void displayMaxAndCurrent(int max, int current){
+        
+    }
 
     @Override
     public void searchByTfn(int tfn) {
@@ -418,5 +454,11 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     public void searchByName(String lastName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void displayMessage(String message) {
+        JOptionPane.showInputDialog(message);
+    }
+
 
 }

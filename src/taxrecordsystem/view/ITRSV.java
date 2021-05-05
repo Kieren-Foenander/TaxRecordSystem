@@ -17,12 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
+import taxrecordsystem.Presenter.TaxRecordSystemPresenter;
+import taxrecordsystem.model.Customer;
 
 /**
  *
  * @author black
  */
-public class ITRSV extends javax.swing.JFrame {
+public class ITRSV extends javax.swing.JFrame implements ITaxRecordSystemView {
+    
+    private TaxRecordSystemPresenter presenter;
 
     /**
      * Creates new form ITRSV
@@ -318,7 +322,17 @@ public class ITRSV extends javax.swing.JFrame {
     }//GEN-LAST:event_maximumEntryTextFieldActionPerformed
 
     private void SaveButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
+        int tfn = Integer.parseInt(tfnTextField.getText());
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String address = addressTextField.getText();
+        String phone = phoneTextField.getText();
+        double income = Double.parseDouble(incomeTextField.getText());
+        double deductible = Double.parseDouble(deductibleTextField.getText());
+        double taxHeld = 0;
+        double returnTax = 0;
+        presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+        
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void editButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -383,6 +397,11 @@ public class ITRSV extends javax.swing.JFrame {
             }
         });
     }
+    
+        
+    public void bind(TaxRecordSystemPresenter p) {
+        p = presenter;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton SaveButton;
@@ -418,4 +437,40 @@ public class ITRSV extends javax.swing.JFrame {
     private JButton tfnSearchButton;
     private JTextField tfnTextField;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setBrowsing(boolean browsing) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayError(String error) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayRecord(Customer c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayMaxAndCurrent(int max, int current) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void searchByTfn(int tfn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void searchByName(String lastName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
+

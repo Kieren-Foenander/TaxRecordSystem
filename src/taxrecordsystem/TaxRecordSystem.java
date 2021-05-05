@@ -5,6 +5,11 @@ Assignment 2
  */
 package taxrecordsystem;
 
+import taxrecordsystem.Presenter.TaxRecordSystemPresenter;
+import taxrecordsystem.model.Customer;
+import taxrecordsystem.model.ITaxRecordSystemModel;
+import taxrecordsystem.model.TaxRecordSystemModel;
+import taxrecordsystem.view.ITaxRecordSystemView;
 import taxrecordsystem.view.TaxRecordSystemView;
 
 /**
@@ -18,9 +23,14 @@ public class TaxRecordSystem {
      */
     public static void main(String[] args) {
         
-        TaxRecordSystemView trsv = new TaxRecordSystemView();
-        trsv.setVisible(true);
-       
+        ITaxRecordSystemModel itrsm = new TaxRecordSystemModel();
+        
+        ITaxRecordSystemView itrsv = new TaxRecordSystemView();
+        
+        TaxRecordSystemPresenter trsp = new TaxRecordSystemPresenter(itrsm, itrsv);
+        
+        itrsv.bind(trsp);
+
     }
 
 }

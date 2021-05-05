@@ -35,6 +35,42 @@ public class TaxRecordSystemPresenter {
         currentEntry = null;
     }
     
+    private void populateAllTextFields(){
+        view.displayRecord(currentEntry);
+        view.displayMaxAndCurrent(numberOfEntries, currentEntryIndex);
+    }
+    
+    public void createNewCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductible, double taxHeld, double returnTax){
+
+        Customer c = model.createCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+        int result = model.addCustomer(c.getTfn(), c.getFirstName(), c.getLastName(), c.getAddress(), c.getPhone(), c.getIncome(), c.getDeductibleAmount(), c.getTaxHeld(), c.getReturnTax());
+        if (result == 1){
+            view.displayMessage("Customer added successfully");
+        } else{
+            view.displayMessage("Customer entry failed");
+        }
+    }
+    
+    public void performQueryByTfn(int tfn){
+        
+    }
+    
+    public void perfomQueryByLastName(String lastName){
+        
+    }
+    
+    public void browse(){
+        
+    }
+    
+    public void edit(int tfn, String firstName, String lastName, String address, String phone, double income, double deductible, double taxHeld, double returnTax, int originalTfn){
+        
+    }
+    
+    public void close(){
+        
+    }
+    
     
     
     

@@ -171,9 +171,11 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         }
         return result; // returns arraylist
     }
+    
+    
 
-    @Override
-    public int addCustomer(int tfn, String firstName, String lastName, String Address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
+    
+    public int addCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
         
         // instantiates int to return
         int result = 0;
@@ -184,7 +186,7 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
             insertNewCustomer.setInt(1, tfn);
             insertNewCustomer.setString(2, firstName);
             insertNewCustomer.setString(3, lastName);
-            insertNewCustomer.setString(4, Address);
+            insertNewCustomer.setString(4, address);
             insertNewCustomer.setString(5, phone);
             insertNewCustomer.setDouble(6, income);
             insertNewCustomer.setDouble(7, deductibleAmount);
@@ -201,7 +203,7 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
     }
 
     @Override
-    public int editCustomer(int tfn, String firstName, String lastName, String Address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax, int originalTfn) {
+    public int editCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax, int originalTfn) {
                 // instantiates int to return
         int result = 0;
         
@@ -211,7 +213,7 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
             updateCustomer.setInt(1, tfn);
             updateCustomer.setString(2, firstName);
             updateCustomer.setString(3, lastName);
-            updateCustomer.setString(4, Address);
+            updateCustomer.setString(4, address);
             updateCustomer.setString(5, phone);
             updateCustomer.setDouble(6, income);
             updateCustomer.setDouble(7, deductibleAmount);
@@ -237,4 +239,9 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         }
     }
 
+    @Override
+    public Customer createCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
+        Customer c = new Customer(tfn,firstName,lastName,address,phone,income,deductibleAmount,taxHeld,returnTax);
+        return c;
+    }
 }
