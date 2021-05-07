@@ -3,7 +3,6 @@ Programmer: Kieren Foenander S012141776
 Course: COIT12200 Software Design and Development
 Assignment 2
  */
-
 package taxrecordsystem.view;
 
 import javax.swing.JFrame;
@@ -30,8 +29,8 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
     // Variables declaration
     private TaxRecordSystemPresenter presenter;
-    
-    private JButton SaveButton;
+
+    private JButton saveButton;
     private JLabel addressLabel;
     private JTextField addressTextField;
     private JButton browsButton;
@@ -66,12 +65,12 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     // End of variables declaration   
 
     public TaxRecordSystemView() {
-        super( " Tax Record System" );
+        super(" Tax Record System");
         initComponents();
     }
 
-    @SuppressWarnings("unchecked") 
-    
+    @SuppressWarnings("unchecked")
+
     // <editor-fold defaultstate="collapsed" desc="Swing Components">  
     private void initComponents() {
 
@@ -100,7 +99,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         tfnSearchButton = new JButton();
         lastNameSearchButton = new JButton();
         clearTextFieldsButton = new JButton();
-        SaveButton = new JButton();
+        saveButton = new JButton();
         editButton = new JButton();
         currentEntryTextField = new JTextField();
         maximumEntryTextField = new JTextField();
@@ -134,11 +133,15 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         taxHeldTextField.setEditable(false);
 
         returnTaxTextField.setEditable(false);
-        
+
         maximumEntryTextField.setEditable(false);
-        
+
         ofLabel.setText("of");
-        
+
+        previousButton.setEnabled(false);
+
+        nextButton.setEnabled(false);
+
         setVisible(true);
 
         browsButton.setText("Browse");
@@ -173,9 +176,9 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             }
         });
 
-        SaveButton.setText("Save New Customer");
-        SaveButton.setToolTipText("");
-        SaveButton.addActionListener(new ActionListener() {
+        saveButton.setText("Save New Customer");
+        saveButton.setToolTipText("");
+        saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SaveButtonActionPerformed(evt);
@@ -189,15 +192,6 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
                 editButtonActionPerformed(evt);
             }
         });
-
-        maximumEntryTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                maximumEntryTextFieldActionPerformed(evt);
-            }
-        });
-
-        
 
         previousButton.setText("previous");
         previousButton.addActionListener(new ActionListener() {
@@ -218,120 +212,120 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel);
         jPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(titleLabel))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(tfnLabel)
-                            .addComponent(firstNameLabel)
-                            .addComponent(lastNameLabel)
-                            .addComponent(addressLabel)
-                            .addComponent(phoneLabel)
-                            .addComponent(incomeLabel)
-                            .addComponent(deductibleLabel)
-                            .addComponent(taxHeldLabel)
-                            .addComponent(returnTaxLabel))
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfnTextField)
-                            .addComponent(firstNameTextField)
-                            .addComponent(lastNameTextField)
-                            .addComponent(addressTextField)
-                            .addComponent(phoneTextField)
-                            .addComponent(incomeTextField)
-                            .addComponent(deductibleTextField)
-                            .addComponent(taxHeldTextField)
-                            .addComponent(returnTaxTextField, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(currentEntryTextField, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                            .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lastNameSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(browsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(SaveButton, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
-                            .addComponent(previousButton, GroupLayout.Alignment.TRAILING))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(167, 167, 167)
+                                        .addComponent(titleLabel))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(tfnLabel)
+                                                .addComponent(firstNameLabel)
+                                                .addComponent(lastNameLabel)
+                                                .addComponent(addressLabel)
+                                                .addComponent(phoneLabel)
+                                                .addComponent(incomeLabel)
+                                                .addComponent(deductibleLabel)
+                                                .addComponent(taxHeldLabel)
+                                                .addComponent(returnTaxLabel))
+                                        .addGap(25, 25, 25)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tfnTextField)
+                                                .addComponent(firstNameTextField)
+                                                .addComponent(lastNameTextField)
+                                                .addComponent(addressTextField)
+                                                .addComponent(phoneTextField)
+                                                .addComponent(incomeTextField)
+                                                .addComponent(deductibleTextField)
+                                                .addComponent(taxHeldTextField)
+                                                .addComponent(returnTaxTextField, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(currentEntryTextField, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(lastNameSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(browsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(previousButton, GroupLayout.Alignment.TRAILING))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(ofLabel)))
                         .addGap(18, 18, 18)
-                        .addComponent(ofLabel)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tfnSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clearTextFieldsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(maximumEntryTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(tfnSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(clearTextFieldsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(editButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(maximumEntryTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfnLabel)
-                            .addComponent(tfnTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(firstNameLabel)
-                            .addComponent(firstNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(lastNameLabel)
-                            .addComponent(lastNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(addressLabel)
-                            .addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(phoneLabel)
-                            .addComponent(phoneTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(incomeLabel)
-                            .addComponent(incomeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(deductibleLabel)
-                            .addComponent(deductibleTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(taxHeldLabel)
-                            .addComponent(taxHeldTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(returnTaxLabel)
-                            .addComponent(returnTaxTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(14, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(currentEntryTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(maximumEntryTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ofLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(previousButton)
-                            .addComponent(nextButton))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SaveButton, GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                            .addComponent(editButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(browsButton, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                            .addComponent(tfnSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lastNameSearchButton, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                            .addComponent(clearTextFieldsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16))))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(titleLabel)
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(tfnLabel)
+                                                .addComponent(tfnTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(firstNameLabel)
+                                                .addComponent(firstNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(lastNameLabel)
+                                                .addComponent(lastNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(addressLabel)
+                                                .addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(phoneLabel)
+                                                .addComponent(phoneTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(incomeLabel)
+                                                .addComponent(incomeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(deductibleLabel)
+                                                .addComponent(deductibleTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(taxHeldLabel)
+                                                .addComponent(taxHeldTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(returnTaxLabel)
+                                                .addComponent(returnTaxTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap(14, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(currentEntryTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(maximumEntryTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(ofLabel))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(previousButton)
+                                                .addComponent(nextButton))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(saveButton, GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                                                .addComponent(editButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(browsButton, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                                                .addComponent(tfnSearchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(lastNameSearchButton, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                                                .addComponent(clearTextFieldsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(16, 16, 16))))
         );
 
         jLayeredPane1.setLayer(jPanel, JLayeredPane.DEFAULT_LAYER);
@@ -339,67 +333,82 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         GroupLayout jLayeredPane1Layout = new GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(jLayeredPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(jLayeredPane1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1)
-                .addContainerGap())
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLayeredPane1)
+                        .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1)
-                .addContainerGap())
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLayeredPane1)
+                        .addContainerGap())
         );
 
         pack();
     }//</editor-fold>   
-    
-    
 
-    private void maximumEntryTextFieldActionPerformed(ActionEvent evt) {                                                      
-        // TODO add your handling code here:
-    }                                                     
+    private void SaveButtonActionPerformed(ActionEvent evt) {
 
-    private void SaveButtonActionPerformed(ActionEvent evt) {                                           
-        int tfn = Integer.parseInt(tfnTextField.getText());
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String address = addressTextField.getText();
-        String phone = phoneTextField.getText();
-        double income = Double.parseDouble(incomeTextField.getText());
-        double deductible = Double.parseDouble(deductibleTextField.getText());
-        double taxHeld = 0;
-        double returnTax = 0;
-        presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
-        
-    }                                          
+        try {
+            int tfn = Integer.parseInt(tfnTextField.getText());
+            String firstName = firstNameTextField.getText();
+            String lastName = lastNameTextField.getText();
+            String address = addressTextField.getText();
+            String phone = phoneTextField.getText();
+            double income = Double.parseDouble(incomeTextField.getText());
+            double deductible = Double.parseDouble(deductibleTextField.getText());
+            double taxHeld = 0;
+            double returnTax = 0;
+            presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+        } catch (NumberFormatException e) {
 
-    private void editButtonActionPerformed(ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
+            displayError("please correct this input to a valid number " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1));
+        }
 
-    private void browseButtonActionPerformed(ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
+    }
 
-    private void tfnSearchButtonActionPerformed(ActionEvent evt) {                                                
-        // TODO add your handling code here:
-    }                                               
+    private void editButtonActionPerformed(ActionEvent evt) {
+        try {
 
-    private void lastNameSearchButtonActionPerformed(ActionEvent evt) {                                                     
-        // TODO add your handling code here:
-    }                                                    
+            int tfn = Integer.parseInt(tfnTextField.getText());
+            String firstName = firstNameTextField.getText();
+            String lastName = lastNameTextField.getText();
+            String address = addressTextField.getText();
+            String phone = phoneTextField.getText();
+            double income = Double.parseDouble(incomeTextField.getText());
+            double deductible = Double.parseDouble(deductibleTextField.getText());
+            double taxHeld = 0;
+            double returnTax = 0;
+            presenter.edit(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+        } catch (NumberFormatException e) {
+            displayError("please correct this input to a valid number " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1));
+        }
+    }
 
-    private void clearTextFieldsButtonActionPerformed(ActionEvent evt) {                                                      
+    private void browseButtonActionPerformed(ActionEvent evt) {
+        presenter.browse();
+    }
+
+    private void tfnSearchButtonActionPerformed(ActionEvent evt) {
+        searchByTfn();
+    }
+
+    private void lastNameSearchButtonActionPerformed(ActionEvent evt) {
+        searchByName();
+    }
+
+    private void clearTextFieldsButtonActionPerformed(ActionEvent evt) {
+        // clears all text fields to enter new customer details
         tfnTextField.setText("");
         firstNameTextField.setText("");
         lastNameTextField.setText("");
@@ -409,17 +418,18 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         deductibleTextField.setText("");
         taxHeldTextField.setText("");
         returnTaxTextField.setText("");
-    }                                                     
+        currentEntryTextField.setText("");
+        maximumEntryTextField.setText("");
+        setBrowsing(false);
+    }
 
-    private void previousButtonActionPerformed(ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                              
+    private void previousButtonActionPerformed(ActionEvent evt) {
+        presenter.previous();
+    }
 
-    private void nextButtonActionPerformed(ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
-
-                
+    private void nextButtonActionPerformed(ActionEvent evt) {
+        presenter.next();
+    }
 
     @Override
     public void bind(TaxRecordSystemPresenter p) {
@@ -427,38 +437,52 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     }
 
     @Override
-    public void setBrowsing(boolean browsing) {
-        presenter.browse();
+    public void setBrowsing(boolean browsing) { // enables buttons for browising purposes 
+        nextButton.setEnabled(browsing);
+        previousButton.setEnabled(browsing);
+        saveButton.setEnabled(!browsing);// disables save button while browsing
     }
 
     @Override
-    public void displayError(String error) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void displayError(String error) {//displays error meesage with given parameter   
+        JOptionPane.showMessageDialog(null, error, "ErrorMsg", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
-    public void displayRecord(Customer c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void displayRecord(Customer c) { // updates all text fields to display passed customer information
+        tfnTextField.setText(String.valueOf(c.getTfn()));
+        firstNameTextField.setText(c.getFirstName());
+        lastNameTextField.setText(c.getLastName());
+        addressTextField.setText(c.getAddress());
+        phoneTextField.setText(c.getPhone());
+        incomeTextField.setText("$" + String.valueOf(c.getIncome()));
+        deductibleTextField.setText("$" + String.valueOf(c.getDeductibleAmount()));
+        taxHeldTextField.setText("$" + String.valueOf(c.getTaxHeld()));
+        returnTaxTextField.setText("$" + String.valueOf(c.getReturnTax()));
     }
-    
-    public void displayMaxAndCurrent(int max, int current){
-        
+
+    public void displayMaxAndCurrent(int max, int current) { // displays the max and current number of customers from the current list being looked at
+        currentEntryTextField.setText(String.valueOf(current + 1));
+        maximumEntryTextField.setText(String.valueOf(max));
+
     }
 
     @Override
-    public void searchByTfn(int tfn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void searchByTfn() { // gets tfn to search for
+        int tfn = Integer.parseInt(JOptionPane.showInputDialog("Enter Tax File Number"));
+        presenter.performQueryByTfn(tfn);
+
     }
 
     @Override
-    public void searchByName(String lastName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void searchByName() { // gets name to search for
+        String name = JOptionPane.showInputDialog("Enter Customers Last Name");
+        presenter.perfomQueryByLastName(name);
     }
 
     @Override
-    public void displayMessage(String message) {
-        JOptionPane.showInputDialog(message);
+    public void displayMessage(String message) { // displays message with the passed string
+        JOptionPane.showMessageDialog(null, message);
     }
-
 
 }
