@@ -105,6 +105,9 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         ResultSet rs = null;
 
         try {
+            
+            selectCustomerByTfn.setInt(1, tfn); // sets tfn to one being searched for
+            
             // executeQuery returns ResultSet containing matching entries
             rs = selectCustomerByTfn.executeQuery();
             result = new ArrayList<Customer>();
@@ -142,6 +145,9 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         ResultSet rs = null;
 
         try {
+            
+            selectCustomerByLastName.setString(1, lastName); // set last name to one being searched for
+            
             // executeQuery returns ResultSet containing matching entries
             rs = selectCustomerByLastName.executeQuery();
             result = new ArrayList<Customer>();

@@ -19,8 +19,8 @@ public interface ITaxRecordSystemView {
     public void displayError(String error);
     public void displayRecord(Customer c);
     public void displayMaxAndCurrent(int max, int current);
-    public void searchByTfn(int tfn);
-    public void searchByName(String lastName);
+    public void searchByTfn();
+    public void searchByName();
     public void displayMessage(String message);
 
 }

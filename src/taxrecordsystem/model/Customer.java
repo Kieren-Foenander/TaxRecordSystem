@@ -157,11 +157,4 @@ public class Customer {
         return returnTax;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" + "tfn=" + tfn + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phone=" + phone + ", income=" + income + ", deductibleAmount=" + deductibleAmount + ", taxHeld=" + taxHeld + ", returnTax=" + returnTax + '}';
-    }
-    
-    
-
 }
