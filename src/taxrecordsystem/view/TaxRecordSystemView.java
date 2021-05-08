@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -136,12 +137,14 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         maximumEntryTextField.setEditable(false);
 
+        currentEntryTextField.setEditable(false);
+
         ofLabel.setText("of");
 
         previousButton.setEnabled(false);
 
         nextButton.setEnabled(false);
-        
+
         editButton.setEnabled(false);
 
         setVisible(true);
@@ -362,6 +365,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     private void SaveButtonActionPerformed(ActionEvent evt) {
 
         try {
+            // gets input from user
             int tfn = Integer.parseInt(tfnTextField.getText());
             String firstName = firstNameTextField.getText();
             String lastName = lastNameTextField.getText();
@@ -371,16 +375,21 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             double deductible = Double.parseDouble(deductibleTextField.getText());
             double taxHeld = 0;
             double returnTax = 0;
-            presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+            if (validateCustomer(tfn, firstName, lastName, address, phone, income, deductible) == true) {
+                //creates new customer with given input
+                presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+            }
+
         } catch (NumberFormatException e) {
-            displayError("please correct "+ e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number" );
+            //ensures number inputs are numbers
+            displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
         }
 
     }
 
     private void editButtonActionPerformed(ActionEvent evt) {
         try {
-
+            //gets input from user
             int tfn = Integer.parseInt(tfnTextField.getText());
             String firstName = firstNameTextField.getText();
             String lastName = lastNameTextField.getText();
@@ -390,10 +399,91 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             double deductible = Double.parseDouble(deductibleTextField.getText());
             double taxHeld = 0;
             double returnTax = 0;
-            presenter.edit(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+            if (validateCustomer(tfn, firstName, lastName, address, phone, income, deductible) == true) {
+                //edits existing user with new input
+                presenter.edit(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
+            }
+
         } catch (NumberFormatException e) {
-            displayError("please correct "+ e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number" );
+            //ensures that number inputs are actually numbers
+            displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
         }
+    }
+
+    private boolean validateCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductible) {
+        // validates length of fields to avoid sql entry errors
+
+        boolean valid;
+        final int MAX_NUMBER = 11;
+        final int PHONE_NUMBER = 10;
+        final int MAX_STRING = 20;
+        final int MAX_ADDRESS = 50;
+
+        if (String.valueOf(tfn).length() > MAX_NUMBER) {
+            displayError("tfn contains too many numbers");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        if (firstName.length() > MAX_STRING) {
+            displayError("first name contains too many letters");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        if (lastName.length() > MAX_STRING) {
+            displayError("last Name contains too many letters");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        if (address.length() > MAX_ADDRESS) {
+            displayError("address contains too many letters");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        /* 
+            special case for phone number as a phone number consists of 10 didgits and can only be numbers but due to starting with
+            a zero in sql it is treated as a varchar so further validation required in system to ensure only numbers used
+        */
+        if (phone.length() != PHONE_NUMBER) { 
+            displayError("phone number must contain 10 digits");
+            valid = false;
+            return valid;
+        } else if (Pattern.matches("[a-zA-Z]+", phone)) { // ensures only numbers used for phone number
+            displayError("phone Number can only contain numbers");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        if (String.valueOf(income).length() > MAX_NUMBER) {
+            displayError("income contains too many numbers");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        if (String.valueOf(deductible).length() > MAX_NUMBER) {
+            displayError("deductible contains too many numbers");
+            valid = false;
+            return valid;
+        } else {
+            valid = true;
+        }
+
+        return valid;
     }
 
     private void browseButtonActionPerformed(ActionEvent evt) {
@@ -431,7 +521,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     private void nextButtonActionPerformed(ActionEvent evt) {
         presenter.next();
     }
-    
+
     @Override
     public void bind(TaxRecordSystemPresenter p) {
         presenter = p;
@@ -441,8 +531,8 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     public void setBrowsing(boolean browsing) { // enables buttons for browising purposes 
         nextButton.setEnabled(browsing);
         previousButton.setEnabled(browsing);
-        editButton.setEnabled(browsing);
-        tfnTextField.setEditable(!browsing);
+        editButton.setEnabled(browsing); // enables edit button as system is displaying existing users now
+        tfnTextField.setEditable(!browsing); // disables textfield from being editet as value cant be changed due to it being the primary key
         saveButton.setEnabled(!browsing);// disables save button while browsing
     }
 
@@ -472,9 +562,12 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
     @Override
     public void searchByTfn() { // gets tfn to search for
-        int tfn = Integer.parseInt(JOptionPane.showInputDialog("Enter Tax File Number"));
-        presenter.performQueryByTfn(tfn);
-
+        try {
+            int tfn = Integer.parseInt(JOptionPane.showInputDialog("Enter Tax File Number"));
+            presenter.performQueryByTfn(tfn);
+        } catch (NumberFormatException e) {
+            displayError(e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " is not a valid tfn number");
+        }
     }
 
     @Override

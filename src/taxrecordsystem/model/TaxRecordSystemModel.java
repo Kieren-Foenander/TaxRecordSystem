@@ -215,7 +215,6 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
         
         //sets parameters for customer update then executes update statement
         try{
-            
             updateCustomer.setInt(1, tfn);
             updateCustomer.setString(2, firstName);
             updateCustomer.setString(3, lastName);
@@ -247,6 +246,7 @@ public class TaxRecordSystemModel implements ITaxRecordSystemModel {
 
     @Override
     public Customer createCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductibleAmount, double taxHeld, double returnTax) {
+        // function is used to create a customer object before entering into the database as the customer object handles the calculation of tax elements
         Customer c = new Customer(tfn,firstName,lastName,address,phone,income,deductibleAmount,taxHeld,returnTax);
         return c;
     }
