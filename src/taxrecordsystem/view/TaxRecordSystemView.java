@@ -141,6 +141,8 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         previousButton.setEnabled(false);
 
         nextButton.setEnabled(false);
+        
+        editButton.setEnabled(false);
 
         setVisible(true);
 
@@ -371,8 +373,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             double returnTax = 0;
             presenter.createNewCustomer(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
         } catch (NumberFormatException e) {
-
-            displayError("please correct this input to a valid number " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1));
+            displayError("please correct "+ e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number" );
         }
 
     }
@@ -391,7 +392,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             double returnTax = 0;
             presenter.edit(tfn, firstName, lastName, address, phone, income, deductible, taxHeld, returnTax);
         } catch (NumberFormatException e) {
-            displayError("please correct this input to a valid number " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1));
+            displayError("please correct "+ e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number" );
         }
     }
 
@@ -430,7 +431,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     private void nextButtonActionPerformed(ActionEvent evt) {
         presenter.next();
     }
-
+    
     @Override
     public void bind(TaxRecordSystemPresenter p) {
         presenter = p;
@@ -440,6 +441,8 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     public void setBrowsing(boolean browsing) { // enables buttons for browising purposes 
         nextButton.setEnabled(browsing);
         previousButton.setEnabled(browsing);
+        editButton.setEnabled(browsing);
+        tfnTextField.setEditable(!browsing);
         saveButton.setEnabled(!browsing);// disables save button while browsing
     }
 
@@ -455,8 +458,8 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         lastNameTextField.setText(c.getLastName());
         addressTextField.setText(c.getAddress());
         phoneTextField.setText(c.getPhone());
-        incomeTextField.setText("$" + String.valueOf(c.getIncome()));
-        deductibleTextField.setText("$" + String.valueOf(c.getDeductibleAmount()));
+        incomeTextField.setText(String.valueOf(c.getIncome()));
+        deductibleTextField.setText(String.valueOf(c.getDeductibleAmount()));
         taxHeldTextField.setText("$" + String.valueOf(c.getTaxHeld()));
         returnTaxTextField.setText("$" + String.valueOf(c.getReturnTax()));
     }
