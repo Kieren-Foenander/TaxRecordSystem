@@ -554,6 +554,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
         returnTaxTextField.setText("$" + String.valueOf(c.getReturnTax()));
     }
 
+    @Override
     public void displayMaxAndCurrent(int max, int current) { // displays the max and current number of customers from the current list being looked at
         currentEntryTextField.setText(String.valueOf(current + 1));
         maximumEntryTextField.setText(String.valueOf(max));

@@ -17,10 +17,7 @@ import taxrecordsystem.view.TaxRecordSystemView;
  * @author Kieren Foenander
  */
 public class TaxRecordSystem {
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         
         ITaxRecordSystemModel itrsm = new TaxRecordSystemModel();
@@ -30,7 +27,5 @@ public class TaxRecordSystem {
         TaxRecordSystemPresenter trsp = new TaxRecordSystemPresenter(itrsm, itrsv);
         
         itrsv.bind(trsp);
-
     }
-
 }
