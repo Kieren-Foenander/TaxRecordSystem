@@ -66,7 +66,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
     // End of variables declaration   
 
     public TaxRecordSystemView() {
-        super(" Tax Record System");
+        super("Tax Record System");
         initComponents();
     }
 
@@ -384,7 +384,6 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             //ensures number inputs are numbers
             displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
         }
-
     }
 
     private void editButtonActionPerformed(ActionEvent evt) {
@@ -409,74 +408,95 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
             displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
         }
     }
+    
+    private boolean validateString(String field,String name, int max, int min){
+        //to validate the string fields 
+        boolean valid;
+        if(field.length() > max){
+            displayError(name+ " contains too many letters");
+            valid = false;
+            return valid;
+        }else if (field.length() ==  min){
+            displayError(name+" field is blank");
+            valid = false;
+            return valid;
+        }else{
+            valid = true;
+        }
+        return valid;
+    }
+    
+    private boolean validateDouble(double field, String name, int max, int min){
+        //to validate integer fields
+        boolean valid;
+        if(String.valueOf(field).length() > max){
+            displayError(name+ " contains too many numbers");
+            valid = false;
+            return valid;
+        }else if (String.valueOf(field).length() ==  min){
+            displayError(name+" field is blank");
+            valid = false;
+            return valid;
+        }else{
+            valid = true;
+        }
+        return valid;
+    }
 
     private boolean validateCustomer(int tfn, String firstName, String lastName, String address, String phone, double income, double deductible) {
         // validates length of fields to avoid sql entry errors
 
         boolean valid;
-        final int MAX_NUMBER = 11;
+        final int MAX = 11;
         final int PHONE_NUMBER = 10;
         final int MAX_STRING = 20;
         final int MAX_ADDRESS = 50;
+        final int MIN = 0;
+        String fn = "First Name";
+        String ln = "Last Name";
+        String ad = "Address";
+        String in = "Income";
+        String de = "Deductible Income";
 
-        if (String.valueOf(tfn).length() > MAX_NUMBER) {
-            displayError("tfn contains too many numbers");
+       if (String.valueOf(tfn).length() > MAX) {
+            displayError("Tax File Number contains too many numbers");
+            valid = false;
+            return valid;
+        }else if (String.valueOf(tfn).length() == MIN){
+            displayError("Tax File Number field is blank");
             valid = false;
             return valid;
         } else {
             valid = true;
         }
 
-        if (firstName.length() > MAX_STRING) {
-            displayError("first name contains too many letters");
+        if(validateString(firstName, fn, MAX_STRING, MIN) == false || validateString(lastName, ln, MAX_STRING, MIN) == false 
+                || validateString(address, ad, MAX_ADDRESS, MIN) == false){
+            //validates firstName, lastName and address fields
             valid = false;
             return valid;
-        } else {
+        }else{
             valid = true;
         }
-
-        if (lastName.length() > MAX_STRING) {
-            displayError("last Name contains too many letters");
+        
+        if (validateDouble(income, in, MAX, MIN) == false || validateDouble(deductible, de, MAX, MIN) == false){
+            //validates income and deductible fields
             valid = false;
             return valid;
-        } else {
-            valid = true;
-        }
-
-        if (address.length() > MAX_ADDRESS) {
-            displayError("address contains too many letters");
-            valid = false;
-            return valid;
-        } else {
+        }else{
             valid = true;
         }
 
         /* 
             special case for phone number as a phone number consists of 10 didgits and can only be numbers but due to starting with
-            a zero in sql it is treated as a varchar so further validation required in system to ensure only numbers used
-        */
-        if (phone.length() != PHONE_NUMBER) { 
+            a zero in sql it is treated as a varchar so this further validation required in system to ensure only numbers used
+         */
+        if (phone.length() != PHONE_NUMBER) {
             displayError("phone number must contain 10 digits");
             valid = false;
             return valid;
         } else if (Pattern.matches("[a-zA-Z]+", phone)) { // ensures only numbers used for phone number
             displayError("phone Number can only contain numbers");
-            valid = false;
-            return valid;
-        } else {
-            valid = true;
-        }
-
-        if (String.valueOf(income).length() > MAX_NUMBER) {
-            displayError("income contains too many numbers");
-            valid = false;
-            return valid;
-        } else {
-            valid = true;
-        }
-
-        if (String.valueOf(deductible).length() > MAX_NUMBER) {
-            displayError("deductible contains too many numbers");
             valid = false;
             return valid;
         } else {
