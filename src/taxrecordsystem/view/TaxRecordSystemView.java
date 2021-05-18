@@ -382,7 +382,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         } catch (NumberFormatException e) {
             //ensures number inputs are numbers
-            displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
+            displayError(e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " is not entered out properly");
         }
     }
 
@@ -405,7 +405,7 @@ public class TaxRecordSystemView extends JFrame implements ITaxRecordSystemView 
 
         } catch (NumberFormatException e) {
             //ensures that number inputs are actually numbers
-            displayError("please correct " + e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " to a valid number");
+            displayError(e.getMessage().substring(e.getMessage().lastIndexOf(" ") + 1) + " is not entered correctly");
         }
     }
     
